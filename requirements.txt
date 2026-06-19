@@ -6,3 +6,4 @@ psutil
 pystyle
 pytz
 websocket-client
+flask

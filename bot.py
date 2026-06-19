@@ -39,7 +39,7 @@ class SelfBot(discord.Client):
 
         self.joined_giveaways = set()
 
-        rpc_cfg = self.config.get("rpc_config", {})
+        rpc_cfg = self.config.get("rpc_config") or {}
         self.loop_delay = rpc_cfg.get("delay", 5)
 
     async def on_message(self, message):
@@ -59,9 +59,9 @@ class SelfBot(discord.Client):
         print_log(f"[</>] Connected | {self.user.display_name}\n\n", Colors.cyan_to_blue, interval=0.05)
         print_log("Welcome to Discord Self Bot , made by Tuan Haii - w love\n\n", Colors.cyan_to_blue, interval=0.05)
 
-        rpc_data = self.config.get("rpc_config", {}).get("data", [])
+        rpc_data = (self.config.get("rpc_config") or {}).get("data", [])
         rpc_count = len(rpc_data) if isinstance(rpc_data, list) else 0
-        status_data = self.config.get("custom_status", {}).get("data", [])
+        status_data = (self.config.get("custom_status") or {}).get("data", [])
         status_count = len(status_data) if isinstance(status_data, list) else 0
 
         print_log(f"[</>] RPCs      : {rpc_count} loaded\n", Colors.green_to_cyan, interval=0.03)

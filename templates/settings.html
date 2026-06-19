@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Settings — Bot Dashboard</title>
+<link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="nav-brand">
+    <svg width="22" height="22" viewBox="0 0 127.14 96.36" fill="#5865F2" xmlns="http://www.w3.org/2000/svg">
+      <path d="M107.7,8.07A105.15,105.15,0,0,0,81.47,0a72.06,72.06,0,0,0-3.36,6.83A97.68,97.68,0,0,0,49,6.83,72.37,72.37,0,0,0,45.64,0,105.89,105.89,0,0,0,19.39,8.09C2.79,32.65-1.71,56.6.54,80.21h0A105.73,105.73,0,0,0,32.71,96.36,77.7,77.7,0,0,0,39.6,85.25a68.42,68.42,0,0,1-10.85-5.18c.91-.66,1.8-1.34,2.66-2a75.57,75.57,0,0,0,64.32,0c.87.71,1.76,1.39,2.66,2a68.68,68.68,0,0,1-10.87,5.19,77,77,0,0,0,6.89,11.1A105.25,105.25,0,0,0,126.6,80.22h0C129.24,52.84,122.09,29.11,107.7,8.07ZM42.45,65.69C36.18,65.69,31,60,31,53s5-12.74,11.43-12.74S54,46,53.89,53,48.84,65.69,42.45,65.69Zm42.24,0C78.41,65.69,73.25,60,73.25,53s5-12.74,11.44-12.74S96.23,46,96.12,53,91.08,65.69,84.69,65.69Z"/>
+    </svg>
+    <span>Discord Self Bot</span>
+  </div>
+  <div class="nav-links">
+    <a href="/" class="nav-link">Dashboard</a>
+    <a href="/settings" class="nav-link active">Settings</a>
+    <a href="/logout" class="nav-link nav-logout">Logout</a>
+  </div>
+</nav>
+
+<main class="main-content">
+
+  <div class="settings-header">
+    <h2 class="page-title">Cài đặt</h2>
+    <button class="btn btn-primary" onclick="saveConfig()">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M17 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V7l-4-4zm-5 16c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3zm3-10H5V5h10v4z"/></svg>
+      Lưu Config
+    </button>
+  </div>
+
+  <div id="saveToast" class="toast" style="display:none"></div>
+
+  <!-- ── GENERAL ─────────────────────────────────────────────────────────── -->
+  <div class="card settings-section">
+    <div class="section-title">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" style="color:#5865F2"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/></svg>
+      Chung
+    </div>
+    <div class="form-grid">
+      <div class="form-group full-width">
+        <label class="form-label">Discord Token <span class="badge badge-red">Quan trọng</span></label>
+        <input type="text" id="token" class="form-input font-mono" value="{{ cfg.get('token','') }}" placeholder="Token tài khoản Discord">
+        <div class="form-hint">Lấy tại: Discord &gt; F12 &gt; Console &gt; webpackChunkdiscord_app...</div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">IP Server</label>
+        <input type="text" id="ip" class="form-input" value="{{ cfg.get('ip','default') }}" placeholder="default">
+        <div class="form-hint">Để "default" nếu chạy trên Replit</div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Mật khẩu Web Dashboard</label>
+        <input type="text" id="web_password" class="form-input" value="{{ cfg.get('web_password','admin') }}" placeholder="admin">
+        <div class="form-hint">Mật khẩu đăng nhập vào trang này</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── CUSTOM STATUS ─────────────────────────────────────────────────────── -->
+  <div class="card settings-section">
+    <div class="section-title">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" style="color:#f0b232"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/></svg>
+      Custom Status
+    </div>
+    <div class="form-grid">
+      <div class="form-group">
+        <label class="form-label">Bật Custom Status</label>
+        <label class="toggle">
+          <input type="checkbox" id="custom_status_enabled" {% if cfg.get('custom_status') %}checked{% endif %}>
+          <span class="toggle-slider"></span>
+        </label>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Delay (giây)</label>
+        <input type="number" id="custom_status_delay" class="form-input" value="{{ cfg.get('custom_status',{}).get('delay',2) if cfg.get('custom_status') else 2 }}" min="1" step="0.5">
+      </div>
+      <div class="form-group full-width">
+        <label class="form-label">Danh sách Status <span class="badge">Mỗi dòng 1 status</span></label>
+        <textarea id="custom_status_data" class="form-input form-textarea" rows="6" placeholder="✧ Status 1&#10;✧ Status 2&#10;✧ Status 3">{% if cfg.get('custom_status') and cfg['custom_status'].get('data') %}{% for s in cfg['custom_status']['data'] %}{{ s }}
+{% endfor %}{% endif %}</textarea>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── RPC CONFIG ─────────────────────────────────────────────────────────── -->
+  <div class="card settings-section">
+    <div class="section-title">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" style="color:#57f287"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg>
+      Rich Presence (RPC)
+    </div>
+    <div class="form-grid" style="margin-bottom:16px">
+      <div class="form-group">
+        <label class="form-label">Global Delay (giây)</label>
+        <input type="number" id="rpc_delay" class="form-input" value="{{ cfg.get('rpc_config',{}).get('delay',5) }}" min="1" step="0.5">
+      </div>
+    </div>
+
+    <div id="rpcProfiles">
+      <!-- Populated by JS initSettings() -->
+    </div>
+
+    <button class="btn btn-ghost btn-add-profile" onclick="addRpcProfile()">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
+      Thêm Profile RPC
+    </button>
+  </div>
+
+  <!-- ── GIVEAWAY JOINER ────────────────────────────────────────────────────── -->
+  <div class="card settings-section">
+    <div class="section-title">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" style="color:#eb459e">
+        <path d="M20 6h-2.18c.07-.44.18-.88.18-1.36 0-2.57-2.1-4.64-4.67-4.64-1.6 0-2.98.83-3.84 2.07C8.63 1 7.26.19 5.67.19 3.1.19 1 2.26 1 4.83c0 .48.09.92.18 1.36H1C-.11 6.28-1 7.17-1 8.28v2c0 1.1.89 2 2 2h18c1.1 0 2-.9 2-2v-2c0-1.11-.89-2-2-2zM12.8 6H8.1c-.27-.66-.5-1.36-.5-2.17 0-1.38 1.12-2.5 2.5-2.5s2.5 1.12 2.5 2.5c0 .81-.23 1.51-.5 2.17zm-6.63 0c-.27-.66-.5-1.36-.5-2.17 0-1.38 1.12-2.5 2.5-2.5.21 0 .4.06.6.11C8.4 2.55 8 3.66 8 4.83c0 .45.1.87.17 1.17zm14.83 6H3v8c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2v-8z"/>
+      </svg>
+      Giveaway Joiner
+    </div>
+    <div class="form-grid">
+      <div class="form-group">
+        <label class="form-label">Bật Giveaway Joiner</label>
+        <label class="toggle">
+          <input type="checkbox" id="giveaway_enabled" {% if cfg.get('giveaway_joiner',{}).get('enabled') %}checked{% endif %}>
+          <span class="toggle-slider"></span>
+        </label>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Bật Logging</label>
+        <label class="toggle">
+          <input type="checkbox" id="giveaway_logging" {% if cfg.get('giveaway_joiner',{}).get('logging', True) %}checked{% endif %}>
+          <span class="toggle-slider"></span>
+        </label>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── VOICE CONFIG ───────────────────────────────────────────────────────── -->
+  <div class="card settings-section">
+    <div class="section-title">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" style="color:#5865F2"><path d="M12 15c1.66 0 2.99-1.34 2.99-3L15 6c0-1.66-1.34-3-3-3S9 4.34 9 6v6c0 1.66 1.34 3 3 3zm5.3-3c0 3-2.54 5.1-5.3 5.1S6.7 15 6.7 12H5c0 3.42 2.72 6.23 6 6.72V22h2v-3.28c3.28-.48 6-3.3 6-6.72h-1.7z"/></svg>
+      Voice Config
+    </div>
+    <div class="form-grid">
+      <div class="form-group">
+        <label class="form-label">Bật Voice</label>
+        <label class="toggle">
+          <input type="checkbox" id="voice_enabled" {% if cfg.get('voice_config',{}).get('enabled') %}checked{% endif %}>
+          <span class="toggle-slider"></span>
+        </label>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Guild ID (Server ID)</label>
+        <input type="text" id="voice_guild_id" class="form-input font-mono" value="{{ cfg.get('voice_config',{}).get('guild_id','') }}" placeholder="1234567890">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Channel ID (Voice Channel)</label>
+        <input type="text" id="voice_channel_id" class="form-input font-mono" value="{{ cfg.get('voice_config',{}).get('channel_id','') }}" placeholder="1234567890">
+      </div>
+    </div>
+  </div>
+
+  <!-- ── AUTO QUEST ─────────────────────────────────────────────────────────── -->
+  <div class="card settings-section">
+    <div class="section-title">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" style="color:#faa61a"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-9 14l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+      Auto Quest
+    </div>
+    <div class="form-grid">
+      <div class="form-group">
+        <label class="form-label">Bật Auto Quest</label>
+        <label class="toggle">
+          <input type="checkbox" id="quest_enabled" {% if cfg.get('auto_quest',{}).get('enabled', True) %}checked{% endif %}>
+          <span class="toggle-slider"></span>
+        </label>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Bật Logging</label>
+        <label class="toggle">
+          <input type="checkbox" id="quest_logging" {% if cfg.get('auto_quest',{}).get('logging', True) %}checked{% endif %}>
+          <span class="toggle-slider"></span>
+        </label>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Kiểm tra mỗi (giây)</label>
+        <input type="number" id="quest_interval" class="form-input" value="{{ cfg.get('auto_quest',{}).get('check_interval', 3600) }}" min="60">
+        <div class="form-hint">3600 = 1 tiếng</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── WEBHOOK LOGGING ────────────────────────────────────────────────────── -->
+  <div class="card settings-section">
+    <div class="section-title">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" style="color:#5865F2"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+      Webhook Logging
+    </div>
+    <div class="form-grid">
+      <div class="form-group">
+        <label class="form-label">Bật Webhook</label>
+        <label class="toggle">
+          <input type="checkbox" id="webhook_enabled" {% if cfg.get('webhook_logging',{}).get('enabled') %}checked{% endif %}>
+          <span class="toggle-slider"></span>
+        </label>
+      </div>
+      <div class="form-group full-width">
+        <label class="form-label">Webhook URL</label>
+        <input type="text" id="webhook_url" class="form-input font-mono" value="{{ cfg.get('webhook_logging',{}).get('webhook_url','') }}" placeholder="https://discord.com/api/webhooks/...">
+      </div>
+    </div>
+  </div>
+
+  <!-- ── PLACEHOLDERS ──────────────────────────────────────────────────────── -->
+  <div class="card settings-section">
+    <div class="section-title">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" style="color:#9b59b6"><path d="M9.4 16.6L4.8 12l4.6-4.6L8 6l-6 6 6 6 1.4-1.4zm5.2 0l4.6-4.6-4.6-4.6L16 6l6 6-6 6-1.4-1.4z"/></svg>
+      Danh sách Placeholder
+      <span class="badge" style="margin-left:8px;font-size:11px">Click để copy</span>
+    </div>
+    <p style="color:var(--text-muted);font-size:13px;margin:0 0 16px">Dùng trong title, artist, album, line2, line3 của các RPC profile.</p>
+
+    <div class="ph-group">
+      <div class="ph-group-title">🖥️ Hệ thống</div>
+      <div class="ph-list">
+        <span class="ph-tag" onclick="copyPh(this)">{ping}</span>
+        <span class="ph-tag" onclick="copyPh(this)">{cpu:speed}</span>
+        <span class="ph-tag" onclick="copyPh(this)">{cpu:usage}</span>
+        <span class="ph-tag" onclick="copyPh(this)">{ram:usage}</span>
+        <span class="ph-tag" onclick="copyPh(this)">{uptime:days}</span>
+        <span class="ph-tag" onclick="copyPh(this)">{uptime:hours}</span>
+        <span class="ph-tag" onclick="copyPh(this)">{uptime:minutes}</span>
+        <span class="ph-tag" onclick="copyPh(this)">{uptime:seconds}</span>
+      </div>
+      <div class="ph-descs">
+        <span>Ping (ms)</span>
+        <span>CPU GHz</span>
+        <span>CPU %</span>
+        <span>RAM %</span>
+        <span>Uptime ngày</span>
+        <span>Uptime giờ</span>
+        <span>Uptime phút</span>
+        <span>Uptime giây</span>
+      </div>
+    </div>
+
+    <div class="ph-group">
+      <div class="ph-group-title">🕐 Thời gian & Ngày</div>
+      <div class="ph-list">
+        <span class="ph-tag" onclick="copyPh(this)">{hour}</span>
+        <span class="ph-tag" onclick="copyPh(this)">{hour24}</span>
+        <span class="ph-tag" onclick="copyPh(this)">{min}</span>
+        <span class="ph-tag" onclick="copyPh(this)">{date}</span>
+        <span class="ph-tag" onclick="copyPh(this)">{month}</span>
+        <span class="ph-tag" onclick="copyPh(this)">{year}</span>
+        <span class="ph-tag" onclick="copyPh(this)">{emoji:time}</span>
+        <span class="ph-tag" onclick="copyPh(this)">{emoji:clock}</span>
+      </div>
+      <div class="ph-descs">
+        <span>Giờ 12h</span>
+        <span>Giờ 24h</span>
+        <span>Phút</span>
+        <span>Ngày</span>
+        <span>Tháng</span>
+        <span>Năm</span>
+        <span>☀️/🌙 theo giờ</span>
+        <span>🕛 emoji giờ</span>
+      </div>
+    </div>
+
+    <div class="ph-group">
+      <div class="ph-group-title">🌤️ Thời tiết & Vị trí (theo IP)</div>
+      <div class="ph-list">
+        <span class="ph-tag" onclick="copyPh(this)">{city}</span>
+        <span class="ph-tag" onclick="copyPh(this)">{region}</span>
+        <span class="ph-tag" onclick="copyPh(this)">{country}</span>
+        <span class="ph-tag" onclick="copyPh(this)">{temp:c}</span>
+        <span class="ph-tag" onclick="copyPh(this)">{temp:f}</span>
+        <span class="ph-tag" onclick="copyPh(this)">{temp:apparent}</span>
+        <span class="ph-tag" onclick="copyPh(this)">{weather:emoji}</span>
+        <span class="ph-tag" onclick="copyPh(this)">{weather:desc}</span>
+        <span class="ph-tag" onclick="copyPh(this)">{wind:kph}</span>
+        <span class="ph-tag" onclick="copyPh(this)">{wind:mph}</span>
+        <span class="ph-tag" onclick="copyPh(this)">{wind:dir}</span>
+        <span class="ph-tag" onclick="copyPh(this)">{wind:dir_emoji}</span>
+        <span class="ph-tag" onclick="copyPh(this)">{pressure:mb}</span>
+        <span class="ph-tag" onclick="copyPh(this)">{humidity}</span>
+        <span class="ph-tag" onclick="copyPh(this)">{cloud}</span>
+      </div>
+      <div class="ph-descs">
+        <span>Thành phố</span>
+        <span>Tỉnh/Vùng</span>
+        <span>Quốc gia</span>
+        <span>Nhiệt độ °C</span>
+        <span>Nhiệt độ °F</span>
+        <span>Cảm giác °C</span>
+        <span>Emoji thời tiết</span>
+        <span>Mô tả thời tiết</span>
+        <span>Gió km/h</span>
+        <span>Gió mph</span>
+        <span>Hướng gió</span>
+        <span>Hướng gió 🧭</span>
+        <span>Áp suất mb</span>
+        <span>Độ ẩm %</span>
+        <span>Mây %</span>
+      </div>
+    </div>
+
+    <div class="ph-group">
+      <div class="ph-group-title">🎲 Khác</div>
+      <div class="ph-list">
+        <span class="ph-tag ph-tag-wide" onclick="copyPh(this)">{random(a,b,c)}</span>
+      </div>
+      <div class="ph-descs">
+        <span>Chọn ngẫu nhiên 1 giá trị — VD: {random(🌸,🌼,🌻)}</span>
+      </div>
+    </div>
+
+    <div id="phCopyToast" style="display:none;margin-top:10px;padding:6px 12px;background:#57f28720;border:1px solid #57f287;border-radius:6px;color:#57f287;font-size:13px;width:fit-content">✓ Đã copy!</div>
+  </div>
+
+  <div style="height:40px"></div>
+
+</main>
+
+<script>
+const INITIAL_PROFILES = {{ (cfg.get('rpc_config',{}).get('data',[]) or []) | tojson }};
+</script>
+<script src="/static/main.js"></script>
+<script>
+initSettings(INITIAL_PROFILES);
+</script>
+</body>
+</html>

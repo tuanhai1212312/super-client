@@ -138,17 +138,11 @@ async def start_rpc(bot):
                 assets = {}
                 large_val = bot.asset_cache.get("large")
                 if large_val:
-                    if large_val.startswith(("http://", "https://")):
-                        pass
-                    else:
-                        assets["large_image"] = large_val
+                    assets["large_image"] = large_val
 
                 small_val = bot.asset_cache.get("small")
                 if small_val:
-                    if small_val.startswith(("http://", "https://")):
-                        pass
-                    else:
-                        assets["small_image"] = small_val
+                    assets["small_image"] = small_val
 
                 line3_lbl = rpc_item.get("album") if rpc_type == "Spotify" else rpc_item.get("line3", "")
                 line3 = await parse_status(bot, line3_lbl) if line3_lbl else ""
@@ -272,7 +266,7 @@ async def start_rpc(bot):
                     delay = 5
 
             if activities:
-                await bot.change_presence(activities=activities)
+                await bot.change_presence(status=discord.Status.online, activities=activities)
 
             await asyncio.sleep(delay)
 

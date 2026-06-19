@@ -1,89 +1,45 @@
-token: "tuanhaidepzai"
-
+token: your discord token here
 # enter your ip if you host this self bot in hosting service 
 # keep it default if you host in your local computer
-ip: "default"
-
-custom_status:
-  delay: 2  # second
-  data: [
-    "✧ 𝕿𝖍𝖆𝖙 𝖘𝖍𝖔𝖚𝖑𝖉 𝖇𝖊 𝖒𝖊 𝖍𝖔𝖑𝖉𝖎𝖓' 𝖞𝖔𝖚𝖗 𝖍𝖆𝖓𝖉 ♡",
-    "ミ★ 𝕿𝖍𝖆𝖙 𝖘𝖍𝖔𝖚𝖑𝖉 𝖇𝖊 𝖒𝖊 𝖒𝖆𝖐𝖎𝖓' 𝖞𝖔𝖚 𝖑𝖆𝖚𝖌𝖍 ✦",
-    "𖤐 𝕿𝖍𝖆𝖙 𝖘𝖍𝖔𝖚𝖑𝖉 𝖇𝖊 𝖒𝖊, 𝖙𝖍𝖎𝖘 𝖎𝖘 𝖘𝖔 𝖘𝖆𝖉 ☾",
-    "❀･𝕿𝖍𝖆𝖙 𝖘𝖍𝖔𝖚𝖑𝖉 𝖇𝖊 𝖒𝖊, 𝖙𝖍𝖆𝖙 𝖘𝖍𝖔𝖚𝖑𝖉 𝖇𝖊 𝖒𝖊 ♬",
-    "♡ˎˊ˗ 𝕿𝖍𝖆𝖙 𝖘𝖍𝖔𝖚𝖑𝖉 𝖇𝖊 𝖒𝖊 𝖋𝖊𝖊𝖑𝖎𝖓' 𝖞𝖔𝖚𝖗 𝖐𝖎𝖘𝖘 ✧",
-    "༄ؘ ۪۪۫۫ 𝕿𝖍𝖆𝖙 𝖘𝖍𝖔𝖚𝖑𝖉 𝖇𝖊 𝖒𝖊 𝖇𝖚𝖞𝖎𝖓' 𝖞𝖔𝖚 𝖌𝖎𝖋𝖙𝖘 °࿐ ࿔:･ﾟ"
-  ]
-
-
-# type: Twitch | Youtube | Playing | Spotify
-# Available placeholders:
-#   - {ping}, {cpu:speed}, {cpu:usage}, {ram:usage}
-#   - {uptime:days}, {uptime:hours}, {uptime:minutes}, {uptime:seconds}
-#   - Time & Date (Based on IP timezone): {hour}, {hour24}, {min}, {date}, {month}, {year}, {emoji:time}, {emoji:clock}
-#   - Weather & Location (IP based):
-#       - {city}, {region}, {country}
-#       - Temperature: {temp:c} (°C), {temp:f} (°F), {temp:apparent} (Feels Like °C)
-#       - Weather Status: {weather:emoji} (e.g. ☀️, 🌧️), {weather:desc} (e.g. Clear, Slight Rain)
-#       - Wind: {wind:kph} (km/h), {wind:mph} (mph), {wind:dir} (e.g. N, NE), {wind:dir_emoji} (e.g. ⬆️, ↗️)
-#       - Others: {pressure:mb}, {humidity} (%), {cloud} (%)
+ip: default
+web_password: admin
 rpc_config:
-  delay: 3  # default rotation delay between RPC profiles (seconds)
+  delay: 3.0
   data:
-    - type: "Spotify"
-      title: "♡𓆪 𝑷𝒉𝒂𝒎 𝑻𝒖𝒂𝒏 𝑯𝒂𝒊 𓆩♡𓆪"
-      artist: "「🌡️⊹{temp:c}°C」❅「🍃⊹{wind:kph} km/h"
-      album: "‧₊˚.⏱️⊹ Uptime: {uptime:days}d {uptime:hours}h {uptime:minutes}m {uptime:seconds}s ✧"
-      large_img: "https://i.ibb.co/hFdSd8V6/1472660893090927457-jxl18.jpg"
-      small_img: "https://i.pinimg.com/originals/4f/d0/c0/4fd0c049c173c9beb5a0101a84deb6f9.gif"
-      duration: 6736 # Total duration of the song in seconds
-      elapsed: 3667   # Time already elapsed in seconds (listening time)
-      btn1_lbl: "{random(🌸,🌼,🌻,🌺,🪷,🌹,🥀,🌷,💐,🌸,🌼,🌻,🌺,🪷,🌹,🥀,🌷,💐,🌸,🌼,🌻,🌺,🪷,🌹,🥀,🌷,💐)}phamtuanhai."
-      btn1_url: "https://www.youtube.com/@GemloginTool1"
-      btn2_lbl: "{random(❤️,🧡,💛,💚,💙,💜,🖤,🤍,🤎)}made w love"
-      btn2_url: "https://discord.com/invite/gemlogin-tool-1380172194264518796"
-      delay: 3
-
-    - type: "Youtube"
-      title: "꒰📡{ping}⊹ms ☾⋆｡ {emoji:time} {temp:c}°C꒱"
-      line2: "「🏙️⊹{region}」❅「🌏⊹{country}"
-      line3: "ミ★ an oan giang ho nuoi tao lon ˚₊"
-      large_img: "https://wallpapers-clan.com/wp-content/uploads/2025/07/pokemon-gengar-glowing-eyes-attack-desktop-wallpaper-cover.jpg"
-      small_img: "https://i.pinimg.com/originals/4f/d0/c0/4fd0c049c173c9beb5a0101a84deb6f9.gif"
-      btn1_lbl: "🎇 Youtube 𓆩♡𓆪"
-      btn1_url: "https://www.youtube.com/@GemloginTool1"
-      btn2_lbl: "໒꒱ Discord ✨"
-      btn2_url: "https://discord.com/invite/gemlogin-tool-1380172194264518796"
-      delay: 3
-
-    - type: "Twitch"
-      title: "꒰⏱️⊹{hour}:{min} | 📅⊹{date}/{month}/{year}꒱"
-      line2: "୨💻୧ CPU⊹{cpu:usage}% ┊ ୨🧠୧ RAM⊹{ram:usage}%"
-      line3: "𓆩♡𓆪 dai ca tuan hai day tao khon 𓆩♡𓆪"
-      large_img: "https://i.ibb.co/nT94SVh/1249695416914141454-jxl5.jpg"
-      small_img: "https://i.pinimg.com/originals/4f/d0/c0/4fd0c049c173c9beb5a0101a84deb6f9.gif"
-      btn1_lbl: "ミ★ bo may dang cap ★彡"
-      btn1_url: "https://www.youtube.com/@GemloginTool1"
-      btn2_lbl: "ミ★ khong chap lu ngu ★彡"
-      btn2_url: "https://discord.com/invite/gemlogin-tool-1380172194264518796"
-      delay: 3
-
-
+  - type: Spotify
+    title: 𓆩♡𓆪 𝑷𝒉𝒂𝒎 𝑻𝒖𝒂𝒏 𝑯𝒂𝒊 𓆩♡𓆪
+    large_img: https://i.ibb.co/xSFD6GQv/image.png
+    small_img: https://media.tenor.com/uvC1Vj7ooUUAAAAC/cat-not-mine.gif
+    delay: 3.0
+    artist: 「🌡️{temp:c}°C」✧「🍃{wind:kph} km/h」
+    album: '✧ ⏱️ Uptime: {uptime:days}d {uptime:hours}h {uptime:minutes}m {uptime:seconds}s
+      ✧'
+    duration: 6736
+    elapsed: 3667
+  - type: Youtube
+    title: 📡{ping}ms ✧ {emoji:time} {temp:c}°C
+    large_img: https://i.ibb.co/xSFD6GQv/image.png
+    small_img: https://media.tenor.com/uvC1Vj7ooUUAAAAC/cat-not-mine.gif
+    delay: 3.0
+    line3: 𓆩♡𓆪 𝑷𝒉𝒂𝒎 𝑻𝒖𝒂𝒏 𝑯𝒂𝒊 𓆩♡𓆪
+  - type: Twitch
+    title: ⏱️{hour}:{min} | 📅{date}/{month}/{year}
+    large_img: https://i.ibb.co/xSFD6GQv/image.png
+    small_img: https://media.tenor.com/uvC1Vj7ooUUAAAAC/cat-not-mine.gif
+    delay: 3.0
+    line2: 💻 CPU: {cpu:usage}% ┊ 🧠 RAM: {ram:usage}%
+    line3: 𓆩♡𓆪 𝑷𝒉𝒂𝒎 𝑻𝒖𝒂𝒏 𝑯𝒂𝒊 𓆩♡𓆪
 giveaway_joiner:
-  enabled: true
+  enabled: false
   logging: true
-
 voice_config:
   enabled: false
-  guild_id: "1380172194264518796"
-  channel_id: "1490011142247026849"
-
+  guild_id: '1380172194264518796'
+  channel_id: '1490011142247026849'
 auto_quest:
   enabled: true
   logging: true
   check_interval: 3600
-
-
 webhook_logging:
   enabled: true
-  webhook_url: "tuanhaidepzai"
+  webhook_url: weebhook here
