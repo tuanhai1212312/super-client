@@ -1,8 +1,0 @@
-discord.py-self
-pyyaml
-requests
-aiohttp
-psutil
-pystyle
-pytz
-websocket-client
